@@ -40,8 +40,8 @@
     crumb.innerHTML = `<a href="index.html">หน้าแรก</a> / <span>ไม่พบสินค้า</span>`;
     detail.innerHTML = `<p class="center">ไม่พบสินค้าที่ระบุ <a href="shop.html">กลับไปหน้าสินค้าทั้งหมด</a></p>`;
   } else {
-    document.title = p.id + " — ARONE Engineering";
-    crumb.innerHTML = `<a href="index.html">หน้าแรก</a> / <a href="shop.html?cat=${p.cat}">${p.catName}</a> / <span>${p.id}</span>`;
+    document.title = (p.code || p.id) + " — ARONE Engineering";
+    crumb.innerHTML = `<a href="index.html">หน้าแรก</a> / <a href="shop.html?cat=${p.cat}">${p.catName}</a> / <span>${p.code || p.id}</span>`;
 
     const specRows = Object.entries(p.specs).map(([k,v])=>`<tr><th>${k}</th><td>${v}</td></tr>`).join("");
     const feats = p.feats.map(f=>`<li>${f}</li>`).join("");
@@ -80,7 +80,7 @@
           </div>
         </div>
         <div class="info">
-          <span class="cat-tag">${p.catName}</span>
+          <span class="cat-tag">${p.catName}</span>${p.finish?` <span class="fin-tag ${p.finish==="Brass-tone"?'fin-b':'fin-s'}">${p.finish}</span>`:''}
           <h1>${p.name}</h1>
           <div class="code">รหัสรุ่น : <b>${p.specs["รุ่น"]||p.id}</b></div>
           <div class="price">${p.price==null?'<span class="ask">สอบถามราคา</span>':AR1_money(p.price)}</div>
