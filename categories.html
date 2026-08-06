@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>หมวดหมู่สินค้า — ARONE Engineering</title>
+<meta name="description" content="เลือกดูข้อต่อไฮดรอลิคและข้อต่อลมตามประเภท ระบบเกลียว (JIC 37°, BSPT, BSPP, เมตริก) และรูปแบบ ตรง งอ สามทาง">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div id="header"></div>
+<section class="pagehead">
+  <div class="container">
+    <h1>หมวดหมู่สินค้า</h1>
+    <p>เลือกดูตามประเภทสินค้า ระบบเกลียว หรือรูปแบบข้อต่อ — คลิกเพื่อดูรายการทั้งหมดในหมวดนั้น</p>
+  </div>
+</section>
+<div class="crumb"><div class="container"><a href="index.html">หน้าแรก</a> / <span>หมวดหมู่สินค้า</span></div></div>
+
+<!-- 1. ตามประเภทสินค้า -->
+<section class="section">
+  <div class="container">
+    <div class="eyebrow">Step 1</div>
+    <h2>เลือกตามประเภทสินค้า</h2>
+    <p class="lead-c">สินค้าของเราแบ่งเป็น 2 กลุ่มหลัก ตามลักษณะงานที่ใช้</p>
+    <div class="catbox-grid big" id="famBoxes"></div>
+  </div>
+</section>
+
+<!-- 2. ตามระบบเกลียว -->
+<section class="section" style="background:#fff">
+  <div class="container">
+    <div class="eyebrow">Step 2</div>
+    <h2>เลือกตามระบบเกลียว</h2>
+    <p class="lead-c">ถ้าทราบมาตรฐานเกลียวที่ต้องการอยู่แล้ว เลือกจากตรงนี้จะเร็วที่สุด
+       — ข้อต่อหนึ่งตัวอาจมีเกลียว 2 แบบ จึงปรากฏได้มากกว่าหนึ่งหมวด</p>
+    <div class="catbox-grid" id="threadBoxes"></div>
+  </div>
+</section>
+
+<!-- 3. ตามรูปแบบ -->
+<section class="section">
+  <div class="container">
+    <div class="eyebrow">Step 3</div>
+    <h2>เลือกตามรูปแบบข้อต่อ</h2>
+    <p class="lead-c">ทราบรูปทรงที่ต้องการ เช่น ข้องอ 90° หรือข้อสามทาง เลือกได้จากตรงนี้</p>
+    <div class="catbox-grid" id="shapeBoxes"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pbanner">
+  <div class="container">
+    <h2>ยังไม่แน่ใจว่าต้องใช้รุ่นไหน?</h2>
+    <p>ค้นหาด้วยรหัสรุ่นหรือชื่อสินค้าได้ทันที หรือส่งแบบ/ตัวอย่างชิ้นงานให้ทีมวิศวกรช่วยเลือกให้</p>
+    <div class="btns">
+      <a class="btn btn-primary" href="shop.html">ดูสินค้าทั้งหมด <b id="allN"></b> รายการ</a>
+      <a class="btn btn-ghost" href="contact.html">ปรึกษาทีมวิศวกร</a>
+    </div>
+  </div>
+</section>
+
+<div id="footer"></div>
+<script src="assets/products.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  document.getElementById("header").innerHTML = AR1_header("categories.html");
+  document.getElementById("footer").innerHTML = AR1_footer();
+
+  const P = AR1_PRODUCTS;
+  document.getElementById("allN").textContent = P.length;
+
+  // pick a representative photo for a group — prefer one that reads clearly as a thumbnail
+  const pic = list => (list.find(p=>p.img) || {}).img || "";
+
+  function box(href, name, list, sub){
+    if(!list.length) return "";
+    return `<a class="catbox" href="${href}">
+      <span class="cb-img"><img src="${pic(list)}" alt="${name}" loading="lazy"></span>
+      <span class="cb-body">
+        <b>${name}</b>
+        <span class="cb-n">${list.length} สินค้า</span>
+        ${sub?`<span class="cb-sub">${sub}</span>`:""}
+      </span>
+    </a>`;
+  }
+
+  // ---- families ----
+  document.getElementById("famBoxes").innerHTML = AR1_CATEGORIES.map(c=>{
+    const list = P.filter(p=>p.cat===c.id);
+    const shapes = [...new Set(list.map(p=>p.shapeName))].slice(0,4).join(" • ");
+    return box(`shop.html?cat=${c.id}`, c.name, list, shapes);
+  }).join("");
+
+  // ---- thread standards ----
+  document.getElementById("threadBoxes").innerHTML = AR1_THREADS.map(t=>{
+    const list = P.filter(p=>p.threads.includes(t.id));
+    return box(`shop.html?thread=${t.id}`, t.name, list);
+  }).join("");
+
+  // ---- shapes ----
+  const shapes = [];
+  P.forEach(p=>{ if(p.shape && !shapes.some(s=>s[0]===p.shape)) shapes.push([p.shape,p.shapeName]); });
+  document.getElementById("shapeBoxes").innerHTML = shapes.map(([id,name])=>{
+    const list = P.filter(p=>p.shape===id);
+    return box(`shop.html?shape=${id}`, name, list);
+  }).join("");
+</script>
+</body>
+</html>

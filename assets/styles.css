@@ -189,6 +189,10 @@ mark{background:rgba(242,108,37,.26);color:inherit;border-radius:3px;padding:0 2
 .pcard .thumb .dwg{font-size:13px;font-weight:700;letter-spacing:.12em;color:#8b93a0}
 .pcard .body{padding:16px 16px 18px;display:flex;flex-direction:column;flex:1}
 .pcard .cat-tag{color:var(--accent-dark);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.fin-tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;
+  letter-spacing:.04em;vertical-align:1px;margin-left:8px;border:1px solid transparent}
+.fin-tag.fin-b{background:#fdf3e3;color:#8a5a12;border-color:#ecd9b0}
+.fin-tag.fin-s{background:#eef1f5;color:#4b5563;border-color:#d3d9e0}
 .pcard h3{font-size:15px;margin:6px 0 4px;color:var(--steel-900);min-height:42px}
 .pcard .price{font-weight:800;color:var(--accent-dark);font-size:17px;margin-bottom:10px}
 .pcard .desc{color:var(--muted);font-size:13px;flex:1;margin-bottom:14px}

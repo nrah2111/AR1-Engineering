@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>รายละเอียดสินค้า — ARONE Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div id="header"></div>
+<div class="crumb"><div class="container" id="crumb"></div></div>
+
+<section class="section">
+  <div class="container" id="detail"></div>
+</section>
+
+<section class="section related">
+  <div class="container">
+    <h2>สินค้าที่เกี่ยวข้อง</h2>
+    <div class="prod-grid" id="related"></div>
+  </div>
+</section>
+
+<div id="footer"></div>
+<script src="assets/products.js"></script>
+<script src="assets/app.js"></script>
+<script>
+  document.getElementById("header").innerHTML = AR1_header("shop.html");
+  document.getElementById("footer").innerHTML = AR1_footer();
+
+  const id = new URLSearchParams(location.search).get("id");
+  const p = AR1_PRODUCTS.find(x=>x.id===id);
+  const crumb = document.getElementById("crumb");
+  const detail = document.getElementById("detail");
+
+  if(!p){
+    crumb.innerHTML = `<a href="index.html">หน้าแรก</a> / <span>ไม่พบสินค้า</span>`;
+    detail.innerHTML = `<p class="center">ไม่พบสินค้าที่ระบุ <a href="shop.html">กลับไปหน้าสินค้าทั้งหมด</a></p>`;
+  } else {
+    document.title = (p.code || p.id) + " — ARONE Engineering";
+    crumb.innerHTML = `<a href="index.html">หน้าแรก</a> / <a href="shop.html?cat=${p.cat}">${p.catName}</a> / <span>${p.code || p.id}</span>`;
+
+    const specRows = Object.entries(p.specs).map(([k,v])=>`<tr><th>${k}</th><td>${v}</td></tr>`).join("");
+    const feats = p.feats.map(f=>`<li>${f}</li>`).join("");
+
+    // size / order-code matrix
+    let sizeBlock = "";
+    if(p.size){
+      const head = p.size.tubes.map(t=>`<th>${t}</th>`).join("");
+      const body = Object.entries(p.size.rows).map(([th,codes])=>
+        `<tr><td class="thc">${th}</td>${codes.map(c=>
+          `<td class="${c?'ok':'na'}">${c||"–"}</td>`).join("")}</tr>`).join("");
+      sizeBlock = `
+        <h3 class="dsec">ตารางขนาด & รหัสสั่งซื้อ</h3>
+        <p class="dnote">อ่านค่า : แถว = ขนาดเกลียว (PT) • คอลัมน์ = ขนาดท่อ • ช่องในตาราง = รหัสต่อท้ายรุ่น
+          (ตัวอย่าง <b>${p.specs["รุ่น"]||p.id}8-02</b> = ท่อ Ø8 × เกลียว 1/4”)</p>
+        <div class="size-wrap">
+          <table class="size-table">
+            <thead><tr><th class="corner">เกลียว (PT)<span>ขนาดท่อ</span></th>${head}</tr></thead>
+            <tbody>${body}</tbody>
+          </table>
+        </div>`;
+    }
+
+    const mainVisual = p.img
+      ? `<img src="${p.img}" alt="${p.id}" class="pimg">`
+      : `<div class="dwg-frame"><div class="big">📐</div><b>DRAWING : ${p.id}</b>
+           <span style="font-size:13px">แบบวิศวกรรม / ภาพชิ้นงาน — พร้อมอัปโหลด</span></div>`;
+
+    detail.innerHTML = `
+      <div class="detail">
+        <div class="dwg-box">
+          <div class="dwg-frame ${p.img?'is-img':''}" id="dwgframe">${p.img?`<img src="${p.img}" alt="${p.id}" class="pimg">`:mainVisual}</div>
+          <div class="dwg-tabs">
+            <button class="active" data-t="photo">ภาพสินค้า</button>
+            <button data-t="drawing">แบบ (Drawing)</button>
+          </div>
+        </div>
+        <div class="info">
+          <span class="cat-tag">${p.catName}</span>${p.finish?` <span class="fin-tag ${p.finish==="Brass-tone"?'fin-b':'fin-s'}">${p.finish}</span>`:''}
+          <h1>${p.name}</h1>
+          <div class="code">รหัสรุ่น : <b>${p.specs["รุ่น"]||p.id}</b></div>
+          <div class="price">${p.price==null?'<span class="ask">สอบถามราคา</span>':AR1_money(p.price)}</div>
+          <p class="lead">${p.lead}</p>
+          <h3 class="dsec">สเปกสินค้า</h3>
+          <table class="spec-table">${specRows}</table>
+          <h3 class="dsec">คุณสมบัติเด่น</h3>
+          <ul class="feat-list">${feats}</ul>
+          <div class="detail-actions">
+            <a class="btn btn-view" href="contact.html">ขอใบเสนอราคา</a>
+            <a class="btn btn-spec" href="#" onclick="alert('ไฟล์แบบ/สเปก PDF พร้อมแนบภายหลัง');return false;">⬇ ดาวน์โหลดสเปก (PDF)</a>
+          </div>
+        </div>
+      </div>
+      ${sizeBlock}`;
+
+    // tab toggle: product photo vs engineering drawing placeholder
+    const frame = document.getElementById("dwgframe");
+    detail.querySelectorAll(".dwg-tabs button").forEach(b=>b.onclick=()=>{
+      detail.querySelectorAll(".dwg-tabs button").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active");
+      if(b.dataset.t==="drawing"){
+        frame.classList.remove("is-img");
+        frame.innerHTML = `<div class="big">📐</div><b>DRAWING : ${p.id}</b>
+          <span style="font-size:13px">แบบวิศวกรรม / ตารางมิติ — พร้อมอัปโหลด</span>`;
+      } else {
+        frame.className = "dwg-frame " + (p.img?"is-img":"");
+        frame.innerHTML = mainVisual;
+      }
+    });
+
+    // related: same category, exclude self
+    const rel = AR1_PRODUCTS.filter(x=>x.cat===p.cat && x.id!==p.id).slice(0,4);
+    document.getElementById("related").innerHTML =
+      (rel.length?rel:AR1_PRODUCTS.filter(x=>x.id!==p.id).slice(0,4)).map(AR1_card).join("");
+  }
+</script>
+</body>
+</html>

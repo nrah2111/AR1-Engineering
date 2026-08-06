@@ -78,11 +78,11 @@
     return `
     <div class="pcard">
       <a class="thumb ${p.img?'has-img':''}" href="${B}product.html?id=${p.id}">
-        <span class="code-badge">${p.id}</span>
+        <span class="code-badge">${p.code || p.id}</span>
         ${inner}
       </a>
       <div class="body">
-        <span class="cat-tag">${p.shapeName || p.catName}</span>
+        <span class="cat-tag">${p.shapeName || p.catName}</span>${p.finish?`<span class="fin-tag ${p.finish==="Brass-tone"?'fin-b':'fin-s'}">${p.finish}</span>`:''}
         <h3><a href="${B}product.html?id=${p.id}">${p.name}</a></h3>
         <div class="price">${p.price==null?'<span class="ask">สอบถามราคา</span>':money(p.price)}</div>
         <p class="desc">${p.lead.slice(0,90)}${p.lead.length>90?'…':''}</p>
