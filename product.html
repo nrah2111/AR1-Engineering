@@ -91,7 +91,9 @@
           <ul class="feat-list">${feats}</ul>
           <div class="detail-actions">
             <a class="btn btn-view" href="contact.html">ขอใบเสนอราคา</a>
-            <a class="btn btn-spec" href="#" onclick="alert('ไฟล์แบบ/สเปก PDF พร้อมแนบภายหลัง');return false;">⬇ ดาวน์โหลดสเปก (PDF)</a>
+            ${p.specPdf
+              ? `<a class="btn btn-spec" href="${p.specPdf}" download>⬇ ดาวน์โหลดสเปก (PDF)</a>`
+              : `<a class="btn btn-spec" href="#" onclick="alert('ไฟล์แบบ/สเปก PDF พร้อมแนบภายหลัง');return false;">⬇ ดาวน์โหลดสเปก (PDF)</a>`}
           </div>
         </div>
       </div>
@@ -103,9 +105,14 @@
       detail.querySelectorAll(".dwg-tabs button").forEach(x=>x.classList.remove("active"));
       b.classList.add("active");
       if(b.dataset.t==="drawing"){
-        frame.classList.remove("is-img");
-        frame.innerHTML = `<div class="big">📐</div><b>DRAWING : ${p.id}</b>
-          <span style="font-size:13px">แบบวิศวกรรม / ตารางมิติ — พร้อมอัปโหลด</span>`;
+        if(p.dwg){
+          frame.className = "dwg-frame is-img";
+          frame.innerHTML = `<img src="${p.dwg}" alt="แบบ/สเปก ${p.id}" class="pimg">`;
+        } else {
+          frame.classList.remove("is-img");
+          frame.innerHTML = `<div class="big">📐</div><b>DRAWING : ${p.id}</b>
+            <span style="font-size:13px">แบบวิศวกรรม / ตารางมิติ — พร้อมอัปโหลด</span>`;
+        }
       } else {
         frame.className = "dwg-frame " + (p.img?"is-img":"");
         frame.innerHTML = mainVisual;

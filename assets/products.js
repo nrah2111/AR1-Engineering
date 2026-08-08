@@ -697,15 +697,17 @@ window.AR1_PRODUCTS = [
         shape:"hose", shapeName:"หัวสาย",
         finish:FIN[f],
         img:"assets/products/GJS-"+sz+"-"+f+".jpg",
+        dwg:"assets/products/GJS-dwg.png",
+        specPdf:"assets/specs/GJS-GBFS-spec.pdf",
         name:"หัวสายไฮดรอลิค GJS-"+sz+" — "+FIN[f]+" ("+FIN_TH[f]+")",
         price:null,
-        lead:"หัวสายไฮดรอลิครุ่น GJS ขนาด "+dash+" ผิวเคลือบ "+FIN[f]+" ("+FIN_TH[f]+") สำหรับย้ำประกอบกับสายไฮดรอลิค ผลิตและควบคุมคุณภาพโดย ARONE Engineering — สเปกและแบบ (Drawing) จะเพิ่มเร็ว ๆ นี้",
+        lead:"หัวสายไฮดรอลิครุ่น GJS ขนาด "+dash+" ผิวเคลือบ "+FIN[f]+" ("+FIN_TH[f]+") สำหรับย้ำประกอบกับสายไฮดรอลิค ผลิตและควบคุมคุณภาพโดย ARONE Engineering ดูสเปกและตารางขนาดฉบับเต็มได้จากแบบแนบ (Drawing/PDF)",
         specs:{
           "รุ่น":"GJS-"+sz,
-          "ประเภท":"หัวสายไฮดรอลิค (Hydraulic Hose Fitting)",
+          "ประเภท":"หัวสายไฮดรอลิค ตัวเมีย BSPP หัวเอียง 30° พร้อมนัทหมุน (GBFS-type Female Inverted Cone Swivel Nut)",
           "ขนาด":dash,
           "ผิวเคลือบ":FIN[f]+" ("+FIN_TH[f]+")",
-          "หมายเหตุ":"สเปกละเอียดและแบบ (Drawing) อยู่ระหว่างจัดทำ — สอบถามได้ทาง LINE @687gazo"
+          "หมายเหตุ":"ดูขนาดเกลียวและ Hose Bore ฉบับเต็มได้จากแบบ (Drawing) หรือดาวน์โหลดสเปก PDF ด้านล่าง"
         },
         feats:[
           "มี 2 ผิวเคลือบให้เลือก: Brass-tone (สีทองเหลือง) และ Silver-tone (สีเงิน)",
