@@ -24,7 +24,7 @@
 <section class="pagehead">
   <div class="container">
     <h1>สินค้าทั้งหมด</h1>
-    <p>ข้อต่อไฮดรอลิค (Adapter) • ข้อต่อลม Push-in Fitting — ครบทุกรูปแบบ พร้อมรหัสรุ่น</p>
+    <p>หัวสายไฮดรอลิค (Hose Fitting) — ครบทุกขนาด พร้อมรหัสรุ่นและสเปก</p>
   </div>
 </section>
 <div class="crumb"><div class="container"><a href="index.html">หน้าแรก</a> / <span>สินค้าทั้งหมด</span></div></div>
@@ -36,7 +36,7 @@
     <div class="searchbox">
       <span class="si">🔍</span>
       <input type="text" id="q" autocomplete="off"
-             placeholder="พิมพ์ชื่อสินค้า หรือรหัสรุ่น เช่น JM-BMT-90, ข้องอ, SPC…" aria-label="ค้นหาสินค้า">
+             placeholder="พิมพ์ชื่อสินค้า หรือรหัสรุ่น เช่น GJS-0404, หัวสาย, Brass-tone…" aria-label="ค้นหาสินค้า">
       <button type="button" id="qclear" aria-label="ล้างคำค้นหา">✕</button>
     </div>
     <div class="quick-tags" id="quick"></div>
@@ -134,7 +134,7 @@
       `<div class='noresult'>
          <div class='big'>🔍</div>
          <p>ไม่พบสินค้าที่ตรงกับ “${qEl.value.trim()}”</p>
-         <p class='hint'>ลองค้นด้วยรหัสรุ่น เช่น <b>JM-BMT</b> หรือรูปแบบ เช่น <b>ข้องอ</b></p>
+         <p class='hint'>ลองค้นด้วยรหัสรุ่น เช่น <b>GJS-0404</b> หรือผิวเคลือบ เช่น <b>Brass-tone</b></p>
          <button class="btn btn-view" onclick="AR1_clearAll()">ล้างตัวกรองทั้งหมด</button>
        </div>`;
 
@@ -155,7 +155,7 @@
   window.AR1_clearAll = function(){ qEl.value=""; query=""; current="all"; shape="all"; thread="all"; render(); };
 
   // quick tags — one tap to a popular search
-  const QUICK = ["JM-BMT","ข้องอ 90°","ข้อสามทาง","ตาไก่","SPC","BSPT","JIC 37°"];
+  const QUICK = ["GJS-0404","GJS-0808","GJS-1616","Brass-tone","Silver-tone","หัวสาย"];
   quickEl.innerHTML = `<span>ค้นหายอดนิยม:</span>` +
     QUICK.map(t=>`<button data-q="${t}">${t}</button>`).join("");
   quickEl.querySelectorAll("button").forEach(b=>b.onclick=()=>{
