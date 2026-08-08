@@ -11,6 +11,14 @@ window.AR1_PRODUCTS = [];
 (function(){
   const FIN = { B:"Brass-tone", S:"Silver-tone" };
   const FIN_TH = { B:"สีทองเหลือง", S:"สีเงิน" };
+  /* ข้อมูลจากตารางสเปก GJS (JIC Female Swivel Nut) */
+  const SPEC = {
+    "0404": { bore:'1/4"',  thread:"7/16-20 UNF"  },
+    "0606": { bore:'3/8"',  thread:"9/16-18 UNF"  },
+    "0808": { bore:'1/2"',  thread:"3/4-16 UNF"   },
+    "1212": { bore:'3/4"',  thread:"1.1/16-12 UN" },
+    "1616": { bore:'1"',    thread:"1.5/16-12 UN" }
+  };
   ["0404","0606","0808","1212","1616"].forEach(sz => {
     const dash = "-" + sz.slice(0,2);
     ["B","S"].forEach(f => {
@@ -21,14 +29,17 @@ window.AR1_PRODUCTS = [];
         finish:FIN[f],
         img:"assets/products/GJS-"+sz+"-"+f+".jpg",
         dwg:"assets/products/GJS-dwg.png",
-        specPdf:"assets/specs/GJS-GBFS-spec.pdf",
+        specPdf:"assets/specs/GJS-spec.pdf",
         name:"หัวสายไฮดรอลิค GJS-"+sz+" — "+FIN[f]+" ("+FIN_TH[f]+")",
         price:null,
         lead:"หัวสายไฮดรอลิครุ่น GJS ขนาด "+dash+" ผิวเคลือบ "+FIN[f]+" ("+FIN_TH[f]+") สำหรับย้ำประกอบกับสายไฮดรอลิค ผลิตและควบคุมคุณภาพโดย ARONE Engineering ดูสเปกและตารางขนาดฉบับเต็มได้จากแบบแนบ (Drawing/PDF)",
         specs:{
           "รุ่น":"GJS-"+sz,
-          "ประเภท":"หัวสายไฮดรอลิค ตัวเมีย BSPP หัวเอียง 30° พร้อมนัทหมุน (GBFS-type Female Inverted Cone Swivel Nut)",
+          "ประเภท":"หัวสายไฮดรอลิค JIC 37° ตัวเมีย นัทหมุนฟรี (JIC Female Swivel Nut)",
+          "ระบบเกลียว":"JIC 37° (UNF / UN)",
           "ขนาด":dash,
+          "Hose Bore":SPEC[sz].bore,
+          "Thread Size":SPEC[sz].thread,
           "ผิวเคลือบ":FIN[f]+" ("+FIN_TH[f]+")",
           "หมายเหตุ":"ดูขนาดเกลียวและ Hose Bore ฉบับเต็มได้จากแบบ (Drawing) หรือดาวน์โหลดสเปก PDF ด้านล่าง"
         },
@@ -45,7 +56,7 @@ window.AR1_PRODUCTS = [];
 
 /* ===== ระบบเกลียว (Thread standard) — ถอดรหัสจากรหัสรุ่นอัตโนมัติ ===== */
 window.AR1_THREADS = [
-  { id:"BSPP",  name:"เกลียว BSPP (P.F.)", tokens:["GJS"] },
+  { id:"JIC37", name:"เกลียว JIC 37° (UNF/UN)", tokens:["GJS"] },
   { id:"OTHER", name:"อื่น ๆ / อเนกประสงค์", tokens:[] }
 ];
 (function(){
