@@ -296,7 +296,7 @@ mark{background:rgba(242,108,37,.26);color:inherit;border-radius:3px;padding:0 2
 .crumb span{color:var(--accent)}
 .detail{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:start}
 .dwg-box{background:var(--card);border:1px solid #e6e9ee;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-.dwg-frame{height:420px;background:
+.dwg-frame{height:clamp(240px,38vw,420px);background:
    linear-gradient(#fff,#fff) padding-box,
    repeating-linear-gradient(0deg,#f0f3f6,#f0f3f6 23px,#e4e9ee 23px,#e4e9ee 24px),
    repeating-linear-gradient(90deg,#f0f3f6,#f0f3f6 23px,#e4e9ee 23px,#e4e9ee 24px);
@@ -324,9 +324,9 @@ mark{background:rgba(242,108,37,.26);color:inherit;border-radius:3px;padding:0 2
 .pcard .thumb.has-img{background:#fff}
 .pcard .thumb.has-img img{height:100%;width:100%;object-fit:contain;padding:12px}
 .pcard .thumb.has-img:hover img{transform:scale(1.06);transition:.25s}
-.dwg-frame.is-img{background:#fff;padding:20px}
-.dwg-frame .pimg{max-height:100%;width:auto;object-fit:contain}
-.dwg-frame video.pimg{max-width:100%;height:100%;background:#111}
+.dwg-frame.is-img{background:#fff;padding:18px 58px 34px}
+.dwg-frame .pimg{max-height:100%;max-width:100%;width:auto;object-fit:contain}
+.dwg-frame video.pimg{max-width:100%;height:100%;width:auto;background:#111;border-radius:8px}
 .dwg-frame{position:relative}
 .media-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;
   width:42px;height:42px;border-radius:50%;border:1px solid #e6e9ee;cursor:pointer;
@@ -339,6 +339,15 @@ mark{background:rgba(242,108,37,.26);color:inherit;border-radius:3px;padding:0 2
 .media-dots{position:absolute;bottom:10px;left:0;right:0;display:flex;gap:6px;justify-content:center;z-index:5}
 .media-dots span{width:8px;height:8px;border-radius:50%;background:#c9ced6}
 .media-dots span.on{background:var(--accent)}
+/* single-column layout: frame is full width, so cap it shorter */
+@media(max-width:1000px){ .dwg-frame{height:clamp(240px,52vw,380px)} }
+@media(max-width:680px){
+  .dwg-frame{height:270px}
+  .dwg-frame.is-img{padding:14px 44px 30px}
+  .media-arrow{width:34px;height:34px;font-size:17px}
+  .media-arrow.prev{left:6px}.media-arrow.next{right:6px}
+  .dwg-tabs button{padding:10px 6px;font-size:13px}
+}
 .price .ask{color:var(--steel-800);font-weight:800}
 .dsec{margin:22px 0 8px;font-size:16px;color:var(--steel-900)}
 .dnote{font-size:13px;color:var(--muted);margin-bottom:12px}
