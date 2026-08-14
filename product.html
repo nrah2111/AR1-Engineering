@@ -65,18 +65,32 @@
         </div>`;
     }
 
-    const mainVisual = p.img
-      ? `<img src="${p.img}" alt="${p.id}" class="pimg">`
-      : `<div class="dwg-frame"><div class="big">📐</div><b>DRAWING : ${p.id}</b>
-           <span style="font-size:13px">แบบวิศวกรรม / ภาพชิ้นงาน — พร้อมอัปโหลด</span></div>`;
+    // ---- media slides: photo → video → drawing ----
+    const slides = [];
+    if(p.img)   slides.push({ t:"photo",   label:"ภาพสินค้า",
+      html:`<img src="${p.img}" alt="${p.id}" class="pimg">` });
+    if(p.video) slides.push({ t:"video",   label:"วิดีโอ",
+      html:`<video class="pimg" src="${p.video}" controls playsinline preload="metadata"></video>` });
+    if(p.dwg)   slides.push({ t:"drawing", label:"แบบ (Drawing)",
+      html:`<img src="${p.dwg}" alt="แบบ/สเปก ${p.id}" class="pimg">` });
+    if(!slides.length) slides.push({ t:"drawing", label:"แบบ (Drawing)",
+      html:`<div class="big">📐</div><b>DRAWING : ${p.id}</b>
+        <span style="font-size:13px">แบบวิศวกรรม / ภาพชิ้นงาน — พร้อมอัปโหลด</span>`, empty:true });
+
+    const arrows = slides.length>1 ? `
+      <button class="media-arrow prev" id="mPrev" aria-label="ก่อนหน้า">‹</button>
+      <button class="media-arrow next" id="mNext" aria-label="ถัดไป">›</button>
+      <div class="media-dots" id="mDots">${slides.map((_,i)=>`<span${i===0?' class="on"':''}></span>`).join("")}</div>` : "";
 
     detail.innerHTML = `
       <div class="detail">
         <div class="dwg-box">
-          <div class="dwg-frame ${p.img?'is-img':''}" id="dwgframe">${p.img?`<img src="${p.img}" alt="${p.id}" class="pimg">`:mainVisual}</div>
+          <div class="dwg-frame ${slides[0].empty?'':'is-img'}" id="dwgframe">
+            <div id="mSlide">${slides[0].html}</div>
+            ${arrows}
+          </div>
           <div class="dwg-tabs">
-            <button class="active" data-t="photo">ภาพสินค้า</button>
-            <button data-t="drawing">แบบ (Drawing)</button>
+            ${slides.map((s,i)=>`<button class="${i===0?'active':''}" data-i="${i}">${s.label}</button>`).join("")}
           </div>
         </div>
         <div class="info">
@@ -99,25 +113,26 @@
       </div>
       ${sizeBlock}`;
 
-    // tab toggle: product photo vs engineering drawing placeholder
+    // media carousel: arrows + tabs both switch slides
+    let cur = 0;
+    const slideBox = document.getElementById("mSlide");
     const frame = document.getElementById("dwgframe");
-    detail.querySelectorAll(".dwg-tabs button").forEach(b=>b.onclick=()=>{
-      detail.querySelectorAll(".dwg-tabs button").forEach(x=>x.classList.remove("active"));
-      b.classList.add("active");
-      if(b.dataset.t==="drawing"){
-        if(p.dwg){
-          frame.className = "dwg-frame is-img";
-          frame.innerHTML = `<img src="${p.dwg}" alt="แบบ/สเปก ${p.id}" class="pimg">`;
-        } else {
-          frame.classList.remove("is-img");
-          frame.innerHTML = `<div class="big">📐</div><b>DRAWING : ${p.id}</b>
-            <span style="font-size:13px">แบบวิศวกรรม / ตารางมิติ — พร้อมอัปโหลด</span>`;
-        }
-      } else {
-        frame.className = "dwg-frame " + (p.img?"is-img":"");
-        frame.innerHTML = mainVisual;
-      }
-    });
+    const tabs = [...detail.querySelectorAll(".dwg-tabs button")];
+    function show(i){
+      // pause video when leaving its slide
+      const vid = slideBox.querySelector("video");
+      if(vid) vid.pause();
+      cur = (i + slides.length) % slides.length;
+      slideBox.innerHTML = slides[cur].html;
+      frame.classList.toggle("is-img", !slides[cur].empty);
+      tabs.forEach((t,ti)=>t.classList.toggle("active", ti===cur));
+      const dots = document.querySelectorAll("#mDots span");
+      dots.forEach((d,di)=>d.classList.toggle("on", di===cur));
+    }
+    tabs.forEach(b=>b.onclick=()=>show(+b.dataset.i));
+    const prev = document.getElementById("mPrev"), next = document.getElementById("mNext");
+    if(prev) prev.onclick = ()=>show(cur-1);
+    if(next) next.onclick = ()=>show(cur+1);
 
     // related: same category, exclude self
     const rel = AR1_PRODUCTS.filter(x=>x.cat===p.cat && x.id!==p.id).slice(0,4);

@@ -28,6 +28,7 @@ window.AR1_PRODUCTS = [];
         shape:"hose", shapeName:"หัวสาย",
         finish:FIN[f],
         img:"assets/products/GJS-"+sz+"-"+f+".jpg",
+        video:"assets/video/products/GJS-"+sz.slice(0,2)+".mp4",
         dwg:"assets/products/GJS-dwg.png",
         specPdf:"assets/specs/GJS-spec.pdf",
         name:"หัวสายไฮดรอลิค GJS-"+sz+" — "+FIN[f]+" ("+FIN_TH[f]+")",
