@@ -47,7 +47,7 @@
           <div class="fbrand"><img src="${B}assets/logo.png" alt="ARONE Engineering"></div>
           <p style="max-width:420px">ผู้ผลิตงาน CNC ข้อต่อ อแดปเตอร์ และคอปเปอร์ลิ่ง สำหรับงานไฮดรอลิคและอุตสาหกรรม
           ผลิตตามสเปกด้วยความแม่นยำสูง พร้อมแบบ (Drawing) ประกอบทุกชิ้นงาน</p>
-          <p style="margin-top:12px;color:#8e96a1">979/4 ม.2 ต.แพรกษาใหม่ อ.เมือง<br>จ.สมุทรปราการ 10280</p>
+          <p style="margin-top:12px;color:#8e96a1">HM5R+36 ต.แพรกษาใหม่ อ.เมือง<br>จ.สมุทรปราการ 10280</p>
         </div>
         <div>
           <h4>เมนู</h4>
@@ -63,7 +63,7 @@
           <a href="mailto:emsaccount@erawan-ms.net">✉ emsaccount@erawan-ms.net</a>
           <a href="${LINE}" target="_blank" rel="noopener">💬 LINE : @687gazo</a>
           <a href="${FB}" target="_blank" rel="noopener">📘 Facebook : ARONE Engineering</a>
-          <a href="https://maps.google.com/?q=979/4+หมู่+2+ตำบลแพรกษาใหม่+อำเภอเมือง+สมุทรปราการ+10280" target="_blank" rel="noopener">📍 979/4 ม.2 ต.แพรกษาใหม่<br>&nbsp;&nbsp;&nbsp;อ.เมือง จ.สมุทรปราการ 10280</a>
+          <a href="https://maps.google.com/?q=HM5R%2B36+Phraek+Sa+Mai,+Mueang+Samut+Prakan+District,+Samut+Prakan+10280" target="_blank" rel="noopener">📍 HM5R+36 ต.แพรกษาใหม่<br>&nbsp;&nbsp;&nbsp;อ.เมือง จ.สมุทรปราการ 10280</a>
         </div>
       </div>
       <div class="footer-bottom">© 2026 ARONE Engineering — สงวนลิขสิทธิ์ทุกประการ</div>
